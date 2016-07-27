@@ -15,7 +15,7 @@ if [ "$(cat /etc/version)" != "2.3.2-RELEASE" ]; then
 	exit 2
 fi
 
-arch="`uname -p`"
+arch="$(uname -p)"
 
 ASSUME_ALWAYS_YES=YES
 export ASSUME_ALWAYS_YES
@@ -70,11 +70,12 @@ exec;
 exit
 EOF
 
-if [ ! "$(/usr/sbin/pkg info | grep pfSense-pkg-squid)" ]; then
-	/usr/sbin/pkg install -r pfSense pfSense-pkg-squid
+if ! /usr/sbin/pkg info | grep pfSense-pkg-squid; 
+   then
+     /usr/sbin/pkg install -r pfSense pfSense-pkg-squid
 fi
 
-cd /usr/local/pkg
+cd /usr/local/pkg || exit
 if ! fetch -o - -q http://projetos.mundounix.com.br/pfsense/2.3/samba3/squid_ntlm.patch | patch -p0 --dry-run -t | grep "Reversed"; then
     fetch -o - -q http://projetos.mundounix.com.br/pfsense/2.3/samba3/squid_ntlm.patch | patch -b -p0
 fi
