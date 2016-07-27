@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 VERSION='20160520001' 
 
