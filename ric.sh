@@ -9,6 +9,12 @@ if [ -f "/etc/samba3.patch.version" ]; then
 	fi
 fi
 
+# Verifica versao pfSense
+if [ "$(cat /etc/version)" != "2.3.2-RELEASE" ]; then
+	echo "ERROR: You need the pfSense version 2.3.1 to apply this script"
+	exit 2
+fi
+
 arch="`uname -p`"
 
 ASSUME_ALWAYS_YES=YES
